@@ -1,0 +1,13 @@
+{
+  "name": "leo/aoc2015",
+  "type": "project",
+  "require": {
+    "innmind/immutable": "^4.14",
+    "innmind/time-continuum": "^3.2",
+    "innmind/black-box": "^4.18",
+    "innmind/filesystem": "^6.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.6"
+  }
+}
