@@ -2,37 +2,71 @@
 
 declare(strict_types = 1);
 
+
+use Innmind\Immutable\Map;
+use Innmind\Immutable\Sequence;
 use Innmind\Immutable\Str;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$data = Str::of(file_get_contents('./../data/day3.txt'));
+$data = function() {
+    $data = \fopen(__DIR__.'./../data/day3.txt', 'r');
+
+    while ($line = \fgets($data)) {
+        yield Str::of($line);
+    }
+};
+
+function updatePos(string $direction, array $pos): array {
+    switch ($direction) {
+        case '^':
+            $pos[0]++;
+            break;
+        case 'v':
+            $pos[0]--;
+            break;
+        case '>':
+            $pos[1]++;
+            break;
+        case '<':
+            $pos[1]--;
+            break;
+        default:
+            throw new \Exception('Unexpected value');
+    }
+    return $pos;
+};
+
+$directions =
+    Sequence::lazy($data(...))
+        ->map(static fn (Str $line) => $line->split())
+        ->get(0)
+        ->match(
+            static fn (Sequence $sequence): Sequence => $sequence,
+            static fn () => throw new \Exception('Unexpected value'),
+        )
+        ->toList();
+
+$directionsMap = Map::of();
+for ($i = 0; $i < count($directions); $i++) {
+    $directionsMap = ($directionsMap)($i, $directions[$i]);
+}
 
 $nbrOfLuckyHouses =
-    $data
-        ->split()
-        ->map(static fn (Str $char) => $char->toString())
-        ->map(static function (string $direction) {
-            static $pos = [0, 0];
-            switch ($direction) {
-                case '^':
-                    $pos[0]++;
-                    break;
-                case 'v':
-                    $pos[0]--;
-                    break;
-                case '>':
-                    $pos[1]++;
-                    break;
-                case '<':
-                    $pos[1]--;
-                    break;
-                default:
-                    throw new \Exception('Unexpected value');
-            }
-            return $pos;
+    $directionsMap
+        ->map(static fn (int $key, Str $char) => $char->toString())
+        ->reduce(Sequence::of([0,0]), static function (Sequence $carry, int $key, string $direction) {
+            $pos = updatePos(
+                $direction,
+                $carry
+                    ->last()
+                    ->match(
+                        static fn (array $pos): array => $pos,
+                        static fn () => throw new \Exception('Unexpected value')
+                    )
+            );
+            return $carry->add($pos);
         })
-        ->add([0,0]) // add start position as it was not added by the map callback
         ->distinct()
         ->count();
 
