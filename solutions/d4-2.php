@@ -6,7 +6,6 @@ $nbrToTest = 1;
 while (!$found = false) {
     $hash = \md5($input . $nbrToTest);
     if (\str_starts_with($hash, "000000")) {
-        $found = true;
         break;
     }
     $nbrToTest++;
