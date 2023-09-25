@@ -8,7 +8,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $data = Str::of(file_get_contents('./../data/day3.txt'));
 
-function getPos(string $direction, array $pos): array {
+function updatePos(string $direction, array $pos): array {
     switch ($direction) {
         case '^':
             $pos[0]++;
@@ -54,16 +54,16 @@ $santaPositions =
     $santa
         ->map(static function (string $direction): array {
             static $pos = [0, 0];
-            return $pos = getPos($direction, $pos);
+            return $pos = updatePos($direction, $pos);
         })
-        ->add([0,0]) // add start position as it was not added by the map callback (initial position is updated before the first iteration return)
+        ->add([0,0]) // add st  art position as it was not added by the map callback (initial position is updated before the first iteration return)
         ->distinct();
 
 $robotSantaPositions =
     $robotSanta
         ->map(static function (string $direction): array {
             static $pos = [0, 0];
-            return $pos = getPos($direction, $pos);
+            return $pos = updatePos($direction, $pos);
         })
         ->add([0,0]) // add start position as it was not added by the map callback (initial position is updated before the first iteration return)
         ->distinct();
