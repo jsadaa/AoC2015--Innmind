@@ -7,6 +7,14 @@ use Innmind\Immutable\Str;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+$data = function() {
+    $data = \fopen(__DIR__.'./../data/day2.txt', 'r');
+
+    while ($line = \fgets($data)) {
+        yield Str::of($line);
+    }
+};
+
 $calcRibbonLength = function (Sequence $line) {
     $l = (int) $line->get(0)->match(
         static fn (string $l) => $l,
@@ -37,12 +45,9 @@ $calcRibbonLength = function (Sequence $line) {
     return $lowestPerimeter + $bow;
 };
 
-$totalLength = Str::of(\file_get_contents('./../data/day2.txt'))
-    ->split("\n")
-    ->filter(static function(Str $line): bool {
-        return !$line->empty();
-    })
-    ->map(static fn (Str $line) => Sequence::of(...\explode('x', $line->toString())))
+$totalLength = Sequence::lazy($data(...))
+    ->map(static fn (Str $line) => $line->split('x'))
+    ->map(static fn (Sequence $line) => $line->map(static fn (Str $value) => $value->toString()))
     ->map($calcRibbonLength(...))
     ->reduce(0, static fn ($carry, $item) => $carry + $item);
 

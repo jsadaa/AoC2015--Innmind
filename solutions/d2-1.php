@@ -7,6 +7,14 @@ use Innmind\Immutable\Str;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+$data = function() {
+    $data = \fopen(__DIR__.'./../data/day2.txt', 'r');
+
+    while ($line = \fgets($data)) {
+        yield Str::of($line);
+    }
+};
+
 $calcSurfaceAreaNeeded = function (Sequence $line) {
     $l = (int) $line->get(0)->match(
         static fn (string $l) => $l,
@@ -36,12 +44,9 @@ $calcSurfaceAreaNeeded = function (Sequence $line) {
     return $lowest + (2 * $lw) + (2 * $wh) + (2 * $hl);
 };
 
-$totalSurface = Str::of(\file_get_contents('./../data/day2.txt'))
-    ->split("\n")
-    ->filter(static function(Str $line): bool {
-        return !$line->empty();
-    })
-    ->map(static fn (Str $line) => Sequence::of(...\explode('x', $line->toString())))
+$totalSurface = Sequence::lazy($data(...))
+    ->map(static fn (Str $line) => $line->split('x'))
+    ->map(static fn (Sequence $line) => $line->map(static fn (Str $value) => $value->toString()))
     ->map($calcSurfaceAreaNeeded(...))
     ->reduce(0, fn ($carry, $item) => $carry + $item);
 
