@@ -2,18 +2,30 @@
 
 declare(strict_types = 1);
 
+use Innmind\Immutable\Sequence;
 use Innmind\Immutable\Str;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 $data = Str::of(file_get_contents('./../data/day1.txt'));
+$data = function() {
+    $data = \fopen(__DIR__.'./../data/day1.txt', 'r');
+
+    while ($line = \fgets($data)) {
+        yield Str::of($line);
+    }
+};
 
 $floor =
-    $data
-        ->split()
-        ->map(static fn (Str $char) => $char->toString())
-        ->reduce(0, static function ($carry, $item) {
-            return $item === "(" ? ++$carry : --$carry;
+    Sequence::lazy($data(...))
+        ->map(static fn (Str $line) => $line->split())
+        ->get(0)
+        ->match(
+            static fn (Sequence $sequence): Sequence => $sequence,
+            static fn () => throw new \Exception('Unexpected value'),
+        )
+        ->reduce(0, static function (int $carry, Str $char) {
+            return $carry + ($char->equals(Str::of('(')) ? 1 : -1);
         });
 
 print_r($floor);
