@@ -42,19 +42,13 @@ $directions =
         ->get(0)
         ->match(
             static fn (Sequence $sequence): Sequence => $sequence,
-            static fn () => throw new \Exception('Unexpected value'),
-        )
-        ->toList();
-
-$directionsMap = Map::of();
-for ($i = 0; $i < count($directions); $i++) {
-    $directionsMap = ($directionsMap)($i, $directions[$i]);
-}
+            static fn () => throw new \Exception('Unexpected empty sequence'),
+        );
 
 $nbrOfLuckyHouses =
-    $directionsMap
-        ->map(static fn (int $key, Str $char) => $char->toString())
-        ->reduce(Sequence::of([0,0]), static function (Sequence $carry, int $key, string $direction) {
+    $directions
+        ->map(static fn (Str $char) => $char->toString())
+        ->reduce(Sequence::of([0,0]), static function (Sequence $carry, string $direction) {
             $pos = updatePos(
                 $direction,
                 $carry
