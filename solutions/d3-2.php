@@ -9,7 +9,7 @@ use Innmind\Immutable\Str;
 require __DIR__ . '/../vendor/autoload.php';
 
 $data = function() {
-    $data = \fopen(__DIR__.'./../data/day3.txt', 'r');
+    $data = \fopen(__DIR__.'/../data/day3.txt', 'r');
 
     while ($line = \fgets($data)) {
         yield Str::of($line);

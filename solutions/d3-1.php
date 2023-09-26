@@ -2,7 +2,6 @@
 
 declare(strict_types = 1);
 
-
 use Innmind\Immutable\Map;
 use Innmind\Immutable\Sequence;
 use Innmind\Immutable\Str;
@@ -10,7 +9,7 @@ use Innmind\Immutable\Str;
 require __DIR__ . '/../vendor/autoload.php';
 
 $data = function() {
-    $data = \fopen(__DIR__.'./../data/day3.txt', 'r');
+    $data = \fopen(__DIR__.'/../data/day3.txt', 'r');
 
     while ($line = \fgets($data)) {
         yield Str::of($line);

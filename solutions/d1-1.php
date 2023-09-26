@@ -7,9 +7,8 @@ use Innmind\Immutable\Str;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$data = Str::of(file_get_contents('./../data/day1.txt'));
 $data = function() {
-    $data = \fopen(__DIR__.'./../data/day1.txt', 'r');
+    $data = \fopen(__DIR__.'/../data/day1.txt', 'r');
 
     while ($line = \fgets($data)) {
         yield Str::of($line);
