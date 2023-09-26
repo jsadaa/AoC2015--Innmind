@@ -9,12 +9,11 @@ $data = function() {
     $data = \fopen(__DIR__.'/../data/day5.txt', 'r');
 
     while ($line = \fgets($data)) {
-        yield $line;
+        yield Str::of($line);
     }
 };
 
-$strings = Sequence::lazy($data(...))
-    ->map(static fn (string $line) => Str::of($line));
+$strings = Sequence::lazy($data(...));
 $badSubstrings = Sequence::of(Str::of('ab'), Str::of('cd'), Str::of('pq'), Str::of('xy'));
 
 $has3Vowels = static fn (Str $line) => $line->matches('/(?:[aeiou].*){3}/');

@@ -9,12 +9,11 @@ $data = function() {
     $data = \fopen(__DIR__.'/../data/day5.txt', 'r');
 
     while ($line = \fgets($data)) {
-        yield $line;
+        yield Str::of($line);
     }
 };
 
-$strings = Sequence::lazy($data(...))
-    ->map(fn (string $line) => Str::of($line));
+$strings = Sequence::lazy($data(...));
 $vowels = Sequence::strings('a', 'e', 'i', 'o', 'u');
 $badSubstrings = Sequence::strings('ab', 'cd', 'pq', 'xy');
 
