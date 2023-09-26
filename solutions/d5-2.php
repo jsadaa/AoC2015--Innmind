@@ -22,7 +22,6 @@ $has2IdenticalPairs = static fn (Str $line) => $line->matches('/(?:(..).*\1)/');
 $has1LetterRepeatingWith1LetterBetween = static fn (Str $line) => $line->matches('/(?:(.).\1)/');
 
 $nbrOfNiceStrings = $strings
-    ->memoize()
     ->filter($has2IdenticalPairs)
     ->filter($has1LetterRepeatingWith1LetterBetween)
     ->count();
