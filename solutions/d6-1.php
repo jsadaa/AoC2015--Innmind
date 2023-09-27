@@ -34,7 +34,7 @@ $data = function () {
 $size = 1000; // Ne pas oublier de changer la taille du tableau si on change la taille de la grille
 $lights = array_fill(0, $size, array_fill(0, $size, 0));
 
-$instructions = Sequence::lazy($data)
+$lightsOn = Sequence::lazy($data)
     ->map(static function (array $line) {
         $action = $line[0];
         $from = explode(',', $line[1]);
@@ -47,8 +47,8 @@ $instructions = Sequence::lazy($data)
         $from = $instruction[1];
         $to = $instruction[2];
 
-        for ($i = (int) $from[0]; $i <= (int) $to[0]; $i++) {
-            for ($j = (int) $from[1]; $j <= (int) $to[1]; $j++) {
+        for ($i = \intval($from[0]); $i <= \intval($to[0]); $i++) {
+            for ($j = \intval($from[1]); $j <= \intval($to[1]); $j++) {
                 switch ($action) {
                     case 'turn-on':
                         $lights[$i][$j] = 1;
@@ -66,9 +66,9 @@ $instructions = Sequence::lazy($data)
         return $lights;
     });
 
-$lightsOn = array_reduce($instructions, static function ($carry, $row) {
+$nbrOfLightsOn = array_reduce($lightsOn, static function ($carry, $row) {
     return $carry + array_sum($row);
 }, 0);
 
 echo 'Advent of Code 2015 - Day 6 - Part 1', "\n";
-echo "Lights on: $lightsOn\n";
+echo "Number of lights on : {$nbrOfLightsOn}", "\n";

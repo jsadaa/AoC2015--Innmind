@@ -43,7 +43,7 @@ for ($i = 0; $i < $size; $i++) {
     }
 }
 
-$instructions = Sequence::lazy($data)
+$nbrOfLightsOn = Sequence::lazy($data)
     ->reduce($lights, static function (Map $lights, Sequence $instruction) {
         $action = $instruction->first()->match(
             static fn(Str $action) => $action,
@@ -62,8 +62,8 @@ $instructions = Sequence::lazy($data)
         ->split(',')
         ->toList();
 
-        for ($i = (int) $from[0]->toString(); $i <= (int) $to[0]->toString(); $i++) {
-            for ($j = (int) $from[1]->toString(); $j <= (int) $to[1]->toString(); $j++) {
+        for ($i = \intval($from[0]->toString()); $i <= \intval($to[0]->toString()); $i++) {
+            for ($j = \intval($from[1]->toString()); $j <= \intval($to[1]->toString()); $j++) {
                 switch ($action->toString()) {
                     case 'turn-on':
                         $lights = $lights
@@ -95,4 +95,4 @@ $instructions = Sequence::lazy($data)
     ->count();
 
 echo 'Advent of Code 2015 - Day 6 - Part 1', "\n";
-echo "Lights on: $instructions\n";
+echo "Number of lights on: {$nbrOfLightsOn}", "\n";
