@@ -24,7 +24,7 @@ $data = function () {
 ########
 # Note #
 ########
-# This solution is faster than the one in solutions/day6-1bis.php
+# This solution is faster.
 # (We can even say that it is the only one that works for a 1000x1000 grid between the two)
 # The reason is that we use a 2D array instead of a Map
 # But the way we mixed the functional and imperative paradigms is not very elegant
