@@ -44,20 +44,20 @@ for ($i = 0; $i < $size; $i++) {
 }
 
 $instructions = Sequence::lazy($data)
-    ->reduce($lights, function (Map $lights, Sequence $instruction) {
+    ->reduce($lights, static function (Map $lights, Sequence $instruction) {
         $action = $instruction->first()->match(
-           fn(Str $action) => $action,
-           fn() => throw new \Exception('No action')
+            static fn(Str $action) => $action,
+            static fn() => throw new \Exception('No action')
         );
         $from = $instruction->get(1)->match(
-           fn(Str $from) => $from,
-           fn() => throw new \Exception('No from')
+            static fn(Str $from) => $from,
+            static fn() => throw new \Exception('No from')
         )
         ->split(',')
         ->toList();
         $to = $instruction->get(2)->match(
-           fn(Str $to) => $to,
-           fn() => throw new \Exception('No to')
+            static fn(Str $to) => $to,
+            static fn() => throw new \Exception('No to')
         )
         ->split(',')
         ->toList();
@@ -80,8 +80,8 @@ $instructions = Sequence::lazy($data)
                             ->put([$i, $j], $lights
                                 ->get([$i, $j])
                                 ->match(
-                                    fn(int $value) => $value === 1 ? 0 : 1,
-                                    fn() => throw new \Exception('No value')
+                                    static fn(int $value) => $value === 1 ? 0 : 1,
+                                    static fn() => throw new \Exception('No value')
                                 )
                             );
                         break;
@@ -91,7 +91,7 @@ $instructions = Sequence::lazy($data)
 
         return $lights;
     })
-    ->filter(fn($key, $value) => $value === 1)
+    ->filter(static fn($key, $value) => $value === 1)
     ->count();
 
 echo 'Advent of Code 2015 - Day 6 - Part 1', "\n";

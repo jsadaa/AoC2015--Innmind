@@ -35,14 +35,14 @@ $size = 1000; // Ne pas oublier de changer la taille du tableau si on change la 
 $lights = array_fill(0, $size, array_fill(0, $size, 0));
 
 $instructions = Sequence::lazy($data)
-    ->map(function (array $line) {
+    ->map(static function (array $line) {
         $action = $line[0];
         $from = explode(',', $line[1]);
         $to = explode(',', $line[2]);
 
         return [$action, $from, $to];
     })
-    ->reduce($lights, function (array $lights, array $instruction) {
+    ->reduce($lights, static function (array $lights, array $instruction) {
         $action = $instruction[0];
         $from = $instruction[1];
         $to = $instruction[2];
@@ -66,7 +66,7 @@ $instructions = Sequence::lazy($data)
         return $lights;
     });
 
-$lightsOn = array_reduce($instructions, function ($carry, $row) {
+$lightsOn = array_reduce($instructions, static function ($carry, $row) {
     return $carry + array_sum($row);
 }, 0);
 
