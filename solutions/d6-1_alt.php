@@ -64,30 +64,23 @@ $nbrOfLightsOn = Sequence::lazy($data)
 
         for ($i = \intval($from[0]->toString()); $i <= \intval($to[0]->toString()); $i++) {
             for ($j = \intval($from[1]->toString()); $j <= \intval($to[1]->toString()); $j++) {
-                switch ($action->toString()) {
-                    case 'turn-on':
-                        $lights = $lights
-                            ->remove([$i, $j])
-                            ->put([$i, $j], 1);
-                        break;
-                    case 'turn-off':
-                        $lights = $lights
-                            ->remove([$i, $j])
-                            ->put([$i, $j], 0);
-                        break;
-                    case 'toggle':
-                        $lights = $lights
-                            ->put([$i, $j], $lights
-                                ->get([$i, $j])
-                                ->match(
-                                    static fn(int $value) => $value === 1 ? 0 : 1,
-                                    static fn() => throw new \Exception('No value')
-                                )
-                            );
-                        break;
-                    default:
-                        throw new \Exception('Unknown action');
-                }
+                $lights = match ($action->toString()) {
+                    'turn-on' => $lights
+                        ->remove([$i, $j])
+                        ->put([$i, $j], 1),
+                    'turn-off' => $lights
+                        ->remove([$i, $j])
+                        ->put([$i, $j], 0),
+                    'toggle' => $lights
+                        ->put([$i, $j], $lights
+                            ->get([$i, $j])
+                            ->match(
+                                static fn(int $value) => $value === 1 ? 0 : 1,
+                                static fn() => throw new \Exception('No value')
+                            )
+                        ),
+                    default => throw new \Exception('Unknown action'),
+                };
             }
         }
 

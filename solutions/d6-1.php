@@ -43,25 +43,16 @@ $lightsOn = Sequence::lazy($data)
         return [$action, $from, $to];
     })
     ->reduce($lights, static function (array $lights, array $instruction) {
-        $action = $instruction[0];
-        $from = $instruction[1];
-        $to = $instruction[2];
+        [$action, $from, $to] = $instruction;
 
         for ($i = \intval($from[0]); $i <= \intval($to[0]); $i++) {
             for ($j = \intval($from[1]); $j <= \intval($to[1]); $j++) {
-                switch ($action) {
-                    case 'turn-on':
-                        $lights[$i][$j] = 1;
-                        break;
-                    case 'turn-off':
-                        $lights[$i][$j] = 0;
-                        break;
-                    case 'toggle':
-                        $lights[$i][$j] = 1 - $lights[$i][$j];
-                        break;
-                    default:
-                        throw new \Exception('Unknown action');
-                }
+                $lights[$i][$j] = match ($action) {
+                    'turn-on' => 1,
+                    'turn-off' => 0,
+                    'toggle' => 1 - $lights[$i][$j],
+                    default => throw new \Exception('Unknown action'),
+                };
             }
         }
 
