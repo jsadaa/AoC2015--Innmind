@@ -59,6 +59,8 @@ $lightsOn = Sequence::lazy($data)
                     case 'toggle':
                         $lights[$i][$j] = 1 - $lights[$i][$j];
                         break;
+                    default:
+                        throw new \Exception('Unknown action');
                 }
             }
         }

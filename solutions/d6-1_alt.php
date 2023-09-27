@@ -85,6 +85,8 @@ $nbrOfLightsOn = Sequence::lazy($data)
                                 )
                             );
                         break;
+                    default:
+                        throw new \Exception('Unknown action');
                 }
             }
         }
