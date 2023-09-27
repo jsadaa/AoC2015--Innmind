@@ -51,9 +51,7 @@ $lights = Sequence::lazy($data)
 
 $totalBrightness =
     Sequence::of(...$lights)
-        ->reduce(0, static function (int $carry, array $row) {
-            return $carry + \array_sum($row);
-        });
+        ->reduce(0, static fn (int $total, array $line) => $total + \array_sum($line));
 
 echo 'Advent of Code 2015 - Day 6 - Part 2', "\n";
 echo "Total brightness: {$totalBrightness}\n";
