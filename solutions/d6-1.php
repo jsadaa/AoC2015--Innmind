@@ -59,9 +59,11 @@ $lightsOn = Sequence::lazy($data)
         return $lights;
     });
 
-$nbrOfLightsOn = array_reduce($lightsOn, static function ($carry, $row) {
-    return $carry + array_sum($row);
-}, 0);
+$nbrOfLightsOn =
+    Sequence::of(...$lightsOn)
+        ->reduce(0, static function (int $carry, array $row) {
+            return $carry + array_sum($row);
+        });
 
 echo 'Advent of Code 2015 - Day 6 - Part 1', "\n";
 echo "Number of lights on : {$nbrOfLightsOn}", "\n";
