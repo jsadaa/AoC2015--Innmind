@@ -29,7 +29,7 @@ $data = function () {
 # The reason is that we use a 2D array instead of a Map
 # But the way we mixed the functional and imperative paradigms is not very elegant
 #
-# PS : See d6-1_alt.php for a solution using the Map::of() method
+# PS : See d6-1_alt.php for a solution using (or trying at least)  the Map::of() method
 
 $size = 1000; // Ne pas oublier de changer la taille du tableau si on change la taille de la grille
 $lights = array_fill(0, $size, array_fill(0, $size, 0));
