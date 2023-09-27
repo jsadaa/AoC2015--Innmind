@@ -39,4 +39,5 @@ for ($index = 1; $index < $directions->size(); $index++) {
     }
 }
 
-print_r($index);
+echo 'Advent of Code 2015 - Day 1 - Part 2', "\n";
+echo 'Basement reached at position: ', $index, "\n";

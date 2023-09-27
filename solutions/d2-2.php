@@ -51,4 +51,5 @@ $totalLength = Sequence::lazy($data(...))
     ->map($calcRibbonLength(...))
     ->reduce(0, static fn ($carry, $item) => $carry + $item);
 
-print_r($totalLength);
+echo 'Advent of Code 2015 - Day 2 - Part 2', "\n";
+echo 'Total ribbon length needed: ', $totalLength, "\n";

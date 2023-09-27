@@ -50,4 +50,5 @@ $totalSurface = Sequence::lazy($data(...))
     ->map($calcSurfaceAreaNeeded(...))
     ->reduce(0, fn ($carry, $item) => $carry + $item);
 
-print_r($totalSurface);
+echo 'Advent of Code 2015 - Day 2 - Part 1', "\n";
+echo 'Total surface area needed: ', $totalSurface, "\n";

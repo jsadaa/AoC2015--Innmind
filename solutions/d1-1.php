@@ -27,4 +27,5 @@ $floor =
             return $carry + ($char->equals(Str::of('(')) ? 1 : -1);
         });
 
-print_r($floor);
+echo 'Advent of Code 2015 - Day 1 - Part 1', "\n";
+echo 'Floor: ', $floor, "\n";

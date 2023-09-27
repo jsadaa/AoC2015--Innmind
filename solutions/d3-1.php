@@ -63,4 +63,5 @@ $nbrOfLuckyHouses =
         ->distinct()
         ->count();
 
-print_r($nbrOfLuckyHouses);
+echo 'Advent of Code 2015 - Day 3 - Part 1', "\n";
+echo 'Number of lucky houses: ', $nbrOfLuckyHouses, "\n";

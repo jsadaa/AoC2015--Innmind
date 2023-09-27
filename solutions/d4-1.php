@@ -11,4 +11,5 @@ while (!$found = false) {
     $nbrToTest++;
 }
 
-print_r($nbrToTest);
+echo 'Advent of Code 2015 - Day 4 - Part 1', "\n";
+echo 'Lowest number to produce a hash starting with 00000: ', $nbrToTest, "\n";

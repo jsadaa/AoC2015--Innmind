@@ -34,4 +34,5 @@ $nbrOfNiceStrings = $strings
     ->filter($hasNoBadStrings)
     ->count();
 
-print_r($nbrOfNiceStrings);
+echo 'Advent of Code 2015 - Day 5 - Part 1', "\n";
+echo 'Number of nice strings: ', $nbrOfNiceStrings, "\n";

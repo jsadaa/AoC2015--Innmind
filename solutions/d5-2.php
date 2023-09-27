@@ -25,4 +25,5 @@ $nbrOfNiceStrings = $strings
     ->filter($has1LetterRepeatingWith1LetterBetween)
     ->count();
 
-print_r($nbrOfNiceStrings);
+echo 'Advent of Code 2015 - Day 5 - Part 2', "\n";
+echo 'Number of nice strings: ', $nbrOfNiceStrings, "\n";
