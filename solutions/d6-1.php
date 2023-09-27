@@ -32,9 +32,9 @@ $data = function () {
 # PS : See d6-1_alt.php for a solution using (or trying at least)  the Map::of() method
 
 $size = 1000; // Ne pas oublier de changer la taille du tableau si on change la taille de la grille
-$lights = array_fill(0, $size, array_fill(0, $size, 0));
+$grid = array_fill(0, $size, array_fill(0, $size, 0));
 
-$lightsOn = Sequence::lazy($data)
+$lights = Sequence::lazy($data)
     ->map(static function (array $line) {
         $action = $line[0];
         $from = explode(',', $line[1]);
@@ -42,7 +42,7 @@ $lightsOn = Sequence::lazy($data)
 
         return [$action, $from, $to];
     })
-    ->reduce($lights, static function (array $lights, array $instruction) {
+    ->reduce($grid, static function (array $lights, array $instruction) {
         [$action, $from, $to] = $instruction;
 
         for ($i = \intval($from[0]); $i <= \intval($to[0]); $i++) {
@@ -60,7 +60,7 @@ $lightsOn = Sequence::lazy($data)
     });
 
 $nbrOfLightsOn =
-    Sequence::of(...$lightsOn)
+    Sequence::of(...$lights)
         ->reduce(0, static function (int $carry, array $row) {
             return $carry + \array_sum($row);
         });
